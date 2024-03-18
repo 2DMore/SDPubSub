@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLQueries {
-    public void insertInformation(int pasajeros, int id_unidad, double velocidad, double temperatura, double combustible ){
+    public void insertInformation(int pasajeros, int id_unidad, double velocidad, double temperatura, double combustible, String status, String coordenadas){
         Connection conn = MySqlConnector.conectar();
         try{
-            String query = "INSERT INTO `information`(`id`, `pasajeros`, `velocidad`, `temperatura`, `combustible`, `id_unidad`) VALUES (DEFAULT," + pasajeros + "," + velocidad + "," + temperatura + "," + combustible + "," + id_unidad +")";
+            String query = "INSERT INTO `information`(`id`, `pasajeros`, `velocidad`, `temperatura`, `combustible`, `id_unidad`,`status`,`coordenadas`) VALUES (DEFAULT," + pasajeros + "," + velocidad + "," + temperatura + "," + combustible + "," + id_unidad +","+status+","+coordenadas+")";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.execute();
             conn.close();

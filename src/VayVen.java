@@ -2,13 +2,15 @@ import java.util.List;
 import java.util.Random;
 
 public class VayVen {
-    private int id;
-    private int pasajeros;
-    private double velocidad;
-    private double temperatura;
-    private double combustible;
-    private String conductor;
-    private int ruta;
+    private int id; //Identificador del vehiculo
+    private int pasajeros; //Cantidad de pasajeros a bordo
+    private double velocidad; // Velocidad de desplazamiento del vehículo
+    private double temperatura; // Temperatura dentro del mismo
+    private double combustible; //Cantidad de combustible en el tanque
+    private String status; //Alguna alarma de funcionamiento del vehiculo
+    private String coordenadas; //Ubicacion del vehiculo
+    private String conductor; //Identificacion del conductor
+    private int ruta; //Ruta del vehículo
 
     public VayVen(int id){
         this.id = id;
@@ -16,7 +18,7 @@ public class VayVen {
 
     public void insertToDB(){
         MySQLQueries sql = new MySQLQueries();
-        sql.insertInformation(this.pasajeros, this.id, this.velocidad, this.temperatura, this.combustible);
+        sql.insertInformation(this.pasajeros, this.id, this.velocidad, this.temperatura, this.combustible, this.status, this.coordenadas);
     }
 
     public List<Message> selectFromDB(int id){
@@ -29,6 +31,8 @@ public class VayVen {
         setVelocidad(getRandomDouble(20, 70));
         setTemperatura(getRandomDouble(30, 40));
         setCombustible(getRandomDouble(10, 40));
+        setStatus(getRandomInt(1, 50));
+        setCoordenadas(getRandomDouble(20.9168024,21.0604768),getRandomDouble(-89.6827908, -89.5379868));
         insertToDB();
         /* 
         List<Message> messages = new ArrayList<>();
@@ -78,6 +82,9 @@ public class VayVen {
         System.out.println("Velocidad: " + velocidad);
         System.out.println("Temperatura: " + temperatura);
         System.out.println("Nivel de combustible: " + combustible);
+        System.out.println("Estatus del VayVen: "+status);
+        System.out.println("Coordenadas del vehículo: "+coordenadas);
+
     }
 
     public int getId() {
@@ -128,6 +135,66 @@ public class VayVen {
         this.conductor = conductor;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(int statusNum) {
+        switch (statusNum) {
+            case 1:
+                this.status="Falla con el aceite";
+                break;
+            
+            case 2:
+                this.status="Presión baja en las llantas";
+                break;
+            
+            case 3:
+                this.status="Temperatura alta en el motor";
+                break;
+                
+            case 4:
+                this.status="Control de tracción activado";
+                break;
+
+            case 5:
+                this.status="Sobrecalentamiento del transmisor";
+                break;
+
+            case 6:
+                this.status="Fallo en el control de traccion";
+                break;
+
+            case 7:
+                this.status="Falla en el motor";
+                break;
+
+            case 8:
+                this.status="Falla en la batería";
+                break;
+
+            case 9:
+                this.status="Falla en las bolsas de aire";
+                break;
+
+            case 10:
+                this.status="Freno de mano activado";
+                break;
+        
+            default:
+                this.status="Funcionamiento normal";
+                break;
+        }
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(double latitud, double longitud) {
+        this.coordenadas = "" + latitud + ", " + longitud;
+    }
+
     public int getRuta() {
         return ruta;
     }
@@ -135,4 +202,5 @@ public class VayVen {
     public void setRuta(int ruta) {
         this.ruta = ruta;
     }
+
 }
