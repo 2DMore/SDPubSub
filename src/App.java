@@ -45,16 +45,34 @@ public class App {
 
                 //publicar los mensajes
                     //camion1
-                pasajerosPublisher.publish(msgCamion1.get(0), pubSubService);
-                velocidadPublisher.publish(msgCamion1.get(1), pubSubService);
-                tempPublisher.publish(msgCamion1.get(2), pubSubService);
-                combustiblePublisher.publish(msgCamion1.get(3), pubSubService);
-
-                pasajerosPublisher.publish(msgCamion2.get(0), pubSubService);
-                velocidadPublisher.publish(msgCamion2.get(1), pubSubService);
-                tempPublisher.publish(msgCamion2.get(2), pubSubService);
-                combustiblePublisher.publish(msgCamion2.get(3), pubSubService);
-
+                for (Message m : msgCamion1) {
+                    if(m.getTopic() == "Pasajeros"){
+                        pasajerosPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Velocidad"){
+                        velocidadPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Temperatura"){
+                        tempPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Combustible"){
+                        combustiblePublisher.publish(m, pubSubService);
+                    }
+                }
+                for (Message m : msgCamion2) {
+                    if(m.getTopic() == "Pasajeros"){
+                        pasajerosPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Velocidad"){
+                        velocidadPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Temperatura"){
+                        tempPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Combustible"){
+                        combustiblePublisher.publish(m, pubSubService);
+                    }
+                }
                 //Broadcast message to all subscribers. After broadcast, messageQueue will be empty in PubSubService
                 pubSubService.broadcast();
                 
@@ -67,6 +85,14 @@ public class App {
                 
                 System.out.println("\n          Messages of All Data Subscriber are: ");
                 allDataSubscriber.printMessages();
+                msgCamion1.clear();
+                msgCamion2.clear();
+
+                allDataSubscriber.getSubscriberMessages().clear();
+                pasajerosSubscriber.getSubscriberMessages().clear();
+                velocidadSubscriber.getSubscriberMessages().clear();   
+                tempSubscriber.getSubscriberMessages().clear();	
+                combustibleSubscriber.getSubscriberMessages().clear();
                 // Esperar 20 segundos antes de la próxima ejecución
                 try {
                     Thread.sleep(20000); 
@@ -77,24 +103,6 @@ public class App {
         });
 
         // Iniciar el hilo
-        thread.start();
-/* 
-        camion1.updateVayVen();
-        camion2.updateVayVen();
-        Message msg1 = new Message("Pasajeros", "Actualmente hay " + camion1.getPasajeros() + " pasajeros en el VayVen ID" + camion1.getId());
-		Message msg2 = new Message("Velocidad", "La velocidad es de " + camion1.getVelocidad() + " km/h en el VayVen ID" + camion1.getId());
-        Message msg3 = new Message("Temperatura", "La temperatura es de " + camion1.getTemperatura() + " °C en el VayVen ID" + camion1.getId());
-        Message msg4 = new Message("Combustible", "El combustible en el VayVen ID" + camion1.getId() + " es de " + camion1.getCombustible() + "litros");
-		
-
-		pasajerosPublisher.publish(msg1, pubSubService);
-		velocidadPublisher.publish(msg2, pubSubService);
-        tempPublisher.publish(msg3, pubSubService);
-        combustiblePublisher.publish(msg4, pubSubService);
-*/
-       
-
-        
-        
+        thread.start();        
     }
 }

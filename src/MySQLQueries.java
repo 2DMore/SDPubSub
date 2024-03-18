@@ -21,12 +21,13 @@ public class MySQLQueries {
     public List<Message> selectInformation(int id){
         Connection conn = MySqlConnector.conectar();
         List<Message> messages = new ArrayList<>();
+        messages.clear();
         try{
             String query = "SELECT * FROM `information` WHERE `id_unidad` =" + id +";";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.execute();
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 int pasajeros = rs.getInt("pasajeros");
                 double velocidad = rs.getDouble("velocidad");
                 double temperatura = rs.getDouble("temperatura");
