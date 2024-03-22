@@ -13,6 +13,10 @@ public class App {
         Publisher velocidadPublisher = new PublisherImpl();
         Publisher tempPublisher = new PublisherImpl();
         Publisher combustiblePublisher = new PublisherImpl();
+        Publisher statusPublisher = new PublisherImpl();
+        Publisher conductorPublisher = new PublisherImpl();
+        Publisher rutaPublisher = new PublisherImpl();
+        Publisher coordenadasPublisher = new PublisherImpl();
 		
 		
 		Subscriber pasajerosSubscriber = new SubscriberImpl();
@@ -33,7 +37,10 @@ public class App {
         allDataSubscriber.addSubscriber("Velocidad", pubSubService);
         allDataSubscriber.addSubscriber("Temperatura", pubSubService);
         allDataSubscriber.addSubscriber("Combustible", pubSubService);
-
+        allDataSubscriber.addSubscriber("Estatus", pubSubService);
+        allDataSubscriber.addSubscriber("Conductor", pubSubService);
+        allDataSubscriber.addSubscriber("Ruta", pubSubService);
+        allDataSubscriber.addSubscriber("Coordenadas", pubSubService);
 
         Thread thread = new Thread(() -> {
             while (true) {
@@ -42,7 +49,6 @@ public class App {
                 camion2.updateVayVen();
                 msgCamion1 = camion1.getMessages();
                 msgCamion2 = camion2.getMessages();
-
                 //publicar los mensajes
                     //camion1
                 for (Message m : msgCamion1) {
@@ -58,6 +64,18 @@ public class App {
                     if(m.getTopic() == "Combustible"){
                         combustiblePublisher.publish(m, pubSubService);
                     }
+                    if(m.getTopic() == "Estatus"){
+                        statusPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Conductor"){
+                        conductorPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Ruta"){
+                        rutaPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Coordenadas"){
+                        coordenadasPublisher.publish(m, pubSubService);
+                    }
                 }
                 for (Message m : msgCamion2) {
                     if(m.getTopic() == "Pasajeros"){
@@ -71,6 +89,18 @@ public class App {
                     }
                     if(m.getTopic() == "Combustible"){
                         combustiblePublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Estatus"){
+                        statusPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Conductor"){
+                        conductorPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Ruta"){
+                        rutaPublisher.publish(m, pubSubService);
+                    }
+                    if(m.getTopic() == "Coordenadas"){
+                        coordenadasPublisher.publish(m, pubSubService);
                     }
                 }
                 //Broadcast message to all subscribers. After broadcast, messageQueue will be empty in PubSubService

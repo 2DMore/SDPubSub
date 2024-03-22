@@ -50,7 +50,6 @@ public class PubSubService {
 			while(!messagesQueue.isEmpty()){
 				Message message = messagesQueue.remove();
 				String topic = message.getTopic();
- 
 				Set<Subscriber> subscribersOfTopic = subscribersTopicMap.get(topic);
  
 				for(Subscriber subscriber : subscribersOfTopic){

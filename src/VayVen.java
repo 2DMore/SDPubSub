@@ -18,7 +18,12 @@ public class VayVen {
 
     public void insertToDB(){
         MySQLQueries sql = new MySQLQueries();
-        sql.insertInformation(this.pasajeros, this.id, this.velocidad, this.temperatura, this.combustible, this.status, this.coordenadas);
+        sql.insertInformation(this.pasajeros, this.id, this.velocidad, this.temperatura, this.combustible, this.ruta,this.status, this.coordenadas, this.conductor);
+    }
+
+    public void updateToDB(){
+        MySQLQueries sql = new MySQLQueries();
+        sql.updateInformation(this.pasajeros, this.id, this.velocidad, this.temperatura, this.combustible,this.ruta,this.status, this.coordenadas, this.conductor);
     }
 
     public List<Message> selectFromDB(int id){
@@ -32,8 +37,10 @@ public class VayVen {
         setTemperatura(getRandomDouble(30, 40));
         setCombustible(getRandomDouble(10, 40));
         setStatus(getRandomInt(1, 50));
+        setRuta(getRandomInt(1, 50));
+        setConductor(getRandomString(4));
         setCoordenadas(getRandomDouble(20.9168024,21.0604768),getRandomDouble(-89.6827908, -89.5379868));
-        insertToDB();
+        updateToDB();
         /* 
         List<Message> messages = new ArrayList<>();
         messages.add(new Message("Pasajeros", "Actualmente hay " + pasajeros + " pasajeros en el VayVen ID" + id));
@@ -76,13 +83,25 @@ public class VayVen {
         return randomValue;
     }
 
+    public String getRandomString(int length){
+        String letras="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder sb = new StringBuilder ();
+        Random random = new Random ();
+        for (int i = 0; i < length; i ++) {
+            sb.append (letras.charAt (random.nextInt (letras.length ())));
+        }
+        return sb.toString ();
+    }
+
     public void printInfo(){
         System.out.println("ID del vehículo: " + id);
         System.out.println("Número de pasajeros: " + pasajeros);
         System.out.println("Velocidad: " + velocidad);
         System.out.println("Temperatura: " + temperatura);
         System.out.println("Nivel de combustible: " + combustible);
+        System.out.println("ID del conductor"+conductor);
         System.out.println("Estatus del VayVen: "+status);
+        System.out.println("Ruta del VayVen: "+ruta);
         System.out.println("Coordenadas del vehículo: "+coordenadas);
 
     }
@@ -131,8 +150,8 @@ public class VayVen {
         return conductor;
     }
 
-    public void setConductor(String conductor) {
-        this.conductor = conductor;
+    public void setConductor(String clave) {
+        this.conductor = clave;
     }
 
     public String getStatus() {
@@ -192,7 +211,7 @@ public class VayVen {
     }
 
     public void setCoordenadas(double latitud, double longitud) {
-        this.coordenadas = "" + latitud + ", " + longitud;
+        this.coordenadas = "latitud " + latitud + " longitud" + longitud;
     }
 
     public int getRuta() {
